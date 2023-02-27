@@ -1,6 +1,5 @@
 #!/usr/bin/python3
-
-import bs4 as bs  
+import heapq  
 import re
 import nltk
 import csv
@@ -57,7 +56,6 @@ def make_summary(filepath):
     for word in word_frequencies.keys():  
         word_frequencies[word] = (word_frequencies[word]/maximum_frequncy)
     
-    #CALCULA LAS FRASES QUE MÁS SE REPITEN
     sentence_scores = {}  
     for sent in sentence_list:  
         for word in nltk.word_tokenize(sent.lower()):
@@ -68,8 +66,6 @@ def make_summary(filepath):
                     else:
                         sentence_scores[sent] += word_frequencies[word]
     
-    #REALIZA EL RESUMEN CON LAS MEJORES FRASES
-    import heapq  
     summary_sentences = heapq.nlargest(12, sentence_scores, key=sentence_scores.get)
     
     summary = ' '.join(summary_sentences)  
